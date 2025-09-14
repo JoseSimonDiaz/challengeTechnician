@@ -1,0 +1,11 @@
+.app-container {
+  min-height: 100vh;
+}
+
+.ant-tabs-content {
+  display: flex;
+  justify-content: flex-start; /* alinea contenido al inicio */
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
