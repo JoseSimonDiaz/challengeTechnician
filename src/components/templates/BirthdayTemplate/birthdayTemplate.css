@@ -1,0 +1,61 @@
+.birthday-template {
+  width: 1090px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.template-background {
+  width: 500px;
+}
+
+.user-photo {
+  position: absolute;
+  top: 54.1%;
+  left: 58.4%;
+  transform: translateX(-50%);
+  width: 201px;
+  height: 170px;
+  object-fit: cover;
+}
+
+.code-snippet {
+  position: absolute;
+  top: 34%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-family: monospace;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: left;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.date-container {
+  position: absolute;
+  bottom: 11.1%;
+  left: 39%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-family: Arial, sans-serif;
+}
+
+.date-container .day {
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.date-container .de-text {
+  font-size: 16px;
+  font-weight: 400;
+  /* margin: 0 4px; */
+}
+
+.date-container .month {
+  font-size: 16px;
+  font-weight: 500;
+}
