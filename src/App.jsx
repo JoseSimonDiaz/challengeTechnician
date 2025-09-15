@@ -1,21 +1,22 @@
-import { Tabs } from "antd";
-import TemplateBirthday from "./pages/TemplateBirthday";
-import WelcomeSing from "./pages/WelcomeSing";
-import { StarFilled, GiftFilled } from "@ant-design/icons";
-import "./styles/App.css";
+import { Tabs } from 'antd';
+import TemplateBirthday from './pages/TemplateBirthday';
+import WelcomeSing from './pages/WelcomeSing';
+import { StarFilled, GiftFilled } from '@ant-design/icons';
+import './styles/app.css';
+
 
 export default function App() {
   return (
     <section className="app-container">
       <Tabs
-      className="ant-tabs-content"
+        className="ant-tabs-content"
         defaultActiveKey="birthday"
         items={[
           {
             key: "birthday",
             label: (
               <span className="ant-tabs-content ">
-               <StarFilled />
+                <StarFilled />
                 Placa de Cumple
               </span>
             ),
@@ -25,11 +26,11 @@ export default function App() {
             key: "welcome",
             label: (
               <span className="ant-tabs-content ">
-              <GiftFilled />
+                <GiftFilled />
                 Placa de Bienvenida
               </span>
             ),
-            children: <WelcomeSing/>,
+            children: <WelcomeSing />,
           },
         ]}
       />

@@ -1,0 +1,42 @@
+.template-birthday-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.input-row {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.form-item {
+  margin-bottom: 16px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.preview-button {
+  height: 40px;
+  padding: 0 30px;
+  font-size: 16px;
+}
+
+@media (max-width: 576px) {
+  .input-row {
+    flex-direction: column;
+  }
+
+  .input-row .ant-col {
+    margin-bottom: 10px;
+  }
+}
