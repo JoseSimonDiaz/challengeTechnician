@@ -1,13 +1,15 @@
 // src/pages/TemplateBirthday.jsx
-import React, { useState } from "react";
+import React, { useState, useRef } from 'react';
 import {
   InboxOutlined,
   LoadingOutlined,
   EyeFilled,
   CloseOutlined,
-} from "@ant-design/icons";
-import { Upload, message, Form, Input, Button, Modal } from "antd";
-import Template_Birthday from "../../public/images/template_birthday.png";
+  DownloadOutlined,
+} from '@ant-design/icons';
+import { Upload, message, Form, Input, Button, Modal, Tabs, Spin } from 'antd';
+import html2canvas from 'html2canvas';
+import Template_Birthday from '../../public/images/template_birthday.png';
 
 const { Dragger } = Upload;
 
@@ -15,33 +17,36 @@ const TemplateBirthday = () => {
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", day: "", month: "" });
+  const previewRef = useRef(null);
 
   const props = {
     name: "file",
     multiple: false,
     accept: ".jpg,.jpeg,.png",
-    beforeUpload: (f) => {
-      const isJpgOrPng = f.type === "image/jpeg" || f.type === "image/png";
+    beforeUpload: (file) => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
       if (!isJpgOrPng) {
         message.error("Solo puedes subir imágenes JPG/PNG!");
         return Upload.LIST_IGNORE;
       }
       setLoading(true);
       setTimeout(() => {
-        const url = URL.createObjectURL(f);
+        const url = URL.createObjectURL(file);
         setPreviewUrl(url);
-        setFile(f);
+        setFile(file);
         setLoading(false);
-        message.success(`${f.name} cargada correctamente.`);
+        message.success(`${file.name} cargada correctamente.`);
       }, 800);
       return false;
     },
     onRemove: () => {
-      setFile(null);
       if (previewUrl) URL.revokeObjectURL(previewUrl);
+      setFile(null);
       setPreviewUrl(null);
       form.resetFields();
     },
@@ -58,9 +63,33 @@ const TemplateBirthday = () => {
   };
 
   const handlePreview = () => {
-    const values = form.getFieldsValue();
-    setFormData(values);
-    setIsModalOpen(true);
+    form
+      .validateFields()
+      .then((values) => {
+        setFormData(values);
+        setIsModalOpen(true);
+      })
+      .catch(() => {});
+  };
+
+  const handleDownload = async () => {
+    if (previewRef.current) {
+      setDownloading(true);
+      try {
+        const canvas = await html2canvas(previewRef.current, {
+          useCORS: true,
+          backgroundColor: null,
+        });
+        const link = document.createElement("a");
+        link.download = `placa_cumple_${formData.name || "usuario"}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      } catch (error) {
+        message.error("Error al descargar la imagen", error);
+      } finally {
+        setDownloading(false);
+      }
+    }
   };
 
   return (
@@ -73,7 +102,23 @@ const TemplateBirthday = () => {
         gap: 20,
       }}
     >
-      {/* Subida de imagen */}
+      <Tabs
+        defaultActiveKey="1"
+        items={[
+          {
+            key: "1",
+            label: "Placa de Cumpleaños",
+            children: null,
+          },
+          {
+            key: "2",
+            label: "Placa de Bienvenida",
+            children: null,
+            disabled: true,
+          },
+        ]}
+      />
+
       <Dragger {...props} disabled={loading}>
         <p className="ant-upload-drag-icon">
           {loading ? (
@@ -88,37 +133,69 @@ const TemplateBirthday = () => {
         </p>
       </Dragger>
 
-      {/* Inputs */}
       {file && (
-        <>
-          <Form form={form} layout="inline">
-            <Form.Item name="name">
-              <Input placeholder="Nombre" />
-            </Form.Item>
-
-            <Form.Item name="day">
-              <Input placeholder="Día" />
-            </Form.Item>
-
-            <Form.Item name="month">
-              <Input placeholder="Mes" />
-            </Form.Item>
-          </Form>
-
-          <Button
-            type="primary"
-            style={{
-              marginTop: 14,
-              borderRadius: 20,
-              width: "160px",
-              padding: 21,
-            }}
-            onClick={handlePreview}
+        <Form form={form} layout="inline" style={{ gap: 8, flexWrap: "wrap" }}>
+          <Form.Item
+            name="name"
+            rules={[
+              { required: true, message: "El nombre es obligatorio" },
+              { max: 80, message: "Máximo 80 caracteres" },
+            ]}
           >
-            <EyeFilled />
-            Previsualizar
-          </Button>
-        </>
+            <Input placeholder="Nombre" />
+          </Form.Item>
+
+          <Form.Item
+            name="day"
+            rules={[
+              { required: true, message: "El día es obligatorio" },
+              {
+                validator: (_, value) =>
+                  !value || (value >= 0 && value <= 31)
+                    ? Promise.resolve()
+                    : Promise.reject("El día debe estar entre 0 y 31"),
+              },
+            ]}
+          >
+            <Input placeholder="Día" type="number" />
+          </Form.Item>
+
+          <Form.Item
+            name="month"
+            rules={[
+              { required: true, message: "El mes es obligatorio" },
+              { max: 15, message: "Máximo 15 caracteres" },
+            ]}
+          >
+            <Input placeholder="Mes" />
+          </Form.Item>
+
+          <Form.Item shouldUpdate>
+            {() => {
+              const hasErrors = form
+                .getFieldsError()
+                .some(({ errors }) => errors.length > 0);
+              const values = form.getFieldsValue();
+              const disabled =
+                !values.name || !values.day || !values.month || hasErrors;
+              return (
+                <Button
+                  type="primary"
+                  onClick={handlePreview}
+                  disabled={disabled}
+                  style={{
+                    marginTop: 14,
+                    borderRadius: 20,
+                    width: 160,
+                    padding: 12,
+                  }}
+                >
+                  <EyeFilled /> Previsualizar
+                </Button>
+              );
+            }}
+          </Form.Item>
+        </Form>
       )}
 
       <Modal
@@ -128,9 +205,10 @@ const TemplateBirthday = () => {
         onCancel={() => setIsModalOpen(false)}
         centered
         width={"fit-content"}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
       >
         <div
+          ref={previewRef}
           style={{
             width: 1090,
             position: "relative",
@@ -139,21 +217,19 @@ const TemplateBirthday = () => {
             alignItems: "center",
           }}
         >
-          {/* Plantilla de fondo */}
           <img
             src={Template_Birthday}
             alt="plantilla"
             style={{ width: "500px" }}
           />
 
-          {/* Foto subida */}
           {previewUrl && (
             <img
               src={previewUrl}
               alt="foto subida"
               style={{
                 position: "absolute",
-                top: "54.1%", // ajusta según tu plantilla
+                top: "54.1%",
                 left: "58.4%",
                 transform: "translateX(-50%)",
                 width: "201px",
@@ -163,11 +239,10 @@ const TemplateBirthday = () => {
             />
           )}
 
-          {/* Bloque de código */}
           <pre
             style={{
               position: "absolute",
-              top: "34%", // ajusta según tu plantilla
+              top: "34%",
               left: "49%",
               transform: "translate(-50%, -50%)",
               color: "white",
@@ -190,7 +265,6 @@ while(true) {
 }`}
           </pre>
 
-          {/* Fecha con estilos separados */}
           <div
             style={{
               position: "absolute",
@@ -202,43 +276,39 @@ while(true) {
               fontFamily: "Arial, sans-serif",
             }}
           >
-            {/* Día */}
-            <div
-              style={{ fontSize: "42px", fontWeight: "bold",  }}
-            >
+            <div style={{ fontSize: "42px", fontWeight: "bold" }}>
               {formData.day || "__"}
             </div>
-
-            {/* "de" */}
-            <div
-              style={{ fontSize: "16px", fontWeight: "400", }}
-            >
-              de
-            </div>
-
-            {/* Mes */}
-            <div
-              style={{ fontSize: "16px", fontWeight: "500", }}
-            >
+            <div style={{ fontSize: "16px", fontWeight: "400" }}>de</div>
+            <div style={{ fontSize: "16px", fontWeight: "500" }}>
               {formData.month || "___"}
             </div>
           </div>
         </div>
 
-        {/* Botón Descargar */}
         <div style={{ display: "flex", justifyContent: "end" }}>
-            <Button
-          type="primary"
-          style={{
-            borderRadius: 20,
-            width: "160px",
-            padding: 21,
-            
-          }}
-        >
-          <EyeFilled />
-          Descargar
-        </Button>
+          <Button
+            type="primary"
+            onClick={handleDownload}
+            disabled={downloading}
+            style={{
+              borderRadius: 20,
+              width: "160px",
+              padding: 12,
+              marginTop: 16,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+            }}
+          >
+            {downloading ? (
+              <Spin indicator={<LoadingOutlined spin />} size="small" />
+            ) : (
+              <DownloadOutlined />
+            )}
+            {downloading ? "Generando..." : "Descargar"}
+          </Button>
         </div>
       </Modal>
     </div>
