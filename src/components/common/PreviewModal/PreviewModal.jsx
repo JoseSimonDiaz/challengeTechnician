@@ -1,15 +1,13 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button, Spin } from 'antd';
-import { CloseOutlined, DownloadOutlined, LoadingOutlined } from '@ant-design/icons';
+import {
+  CloseOutlined,
+  DownloadOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import './previewModal.css';
 
-const PreviewModal = ({
-  isOpen,
-  onClose,
-  onDownload,
-  downloading,
-  children,
-}) => {
+const PreviewModal = ({ isOpen, onClose, onDownload, downloading, children }) => {
   return (
     <Modal
       open={isOpen}
@@ -17,10 +15,10 @@ const PreviewModal = ({
       closeIcon={<CloseOutlined />}
       onCancel={onClose}
       centered
-      width={"fit-content"}
+      width="fit-content"
       className="preview-modal"
     >
-      <h2 className="previewClass">Preview</h2>
+      <h2 className="previewClass">Vista previa</h2>
       {children}
       <div className="modal-footer">
         <Button
@@ -40,5 +38,11 @@ const PreviewModal = ({
     </Modal>
   );
 };
-
+PreviewModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+  downloading: PropTypes.bool,
+  children: PropTypes.node,
+};
 export default PreviewModal;

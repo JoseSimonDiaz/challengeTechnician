@@ -118,5 +118,4 @@ const WelcomeSing = () => {
     </div>
   );
 };
-
 export default WelcomeSing;

@@ -119,5 +119,4 @@ const TemplateBirthday = () => {
     </div>
   );
 };
-
 export default TemplateBirthday;

@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './welcomeTemplate.css';
 import welcomeTemplate from '/images/welcomeTemplate.png';
-import { 
-  FORM_FIELDS, 
-  FILTER_STYLES, 
-  OPTION_IMAGES 
+import {
+  FORM_FIELDS,
+  FILTER_STYLES,
+  OPTION_IMAGES,
 } from '../../../constants/formConstants';
 
 const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
@@ -12,13 +13,9 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const templateRef = useRef(null);
   const option = formData[FORM_FIELDS.OPTION];
   useEffect(() => {
-    const style = FILTER_STYLES[option] || FILTER_STYLES.DEFAULT;
-    setFilterStyle(style);
+    setFilterStyle(FILTER_STYLES[option] || FILTER_STYLES.DEFAULT);
   }, [option]);
-
-  const getOptionImage = (option) => {
-    return OPTION_IMAGES[option] || null;
-  };
+  const getOptionImage = (opt) => OPTION_IMAGES[opt] || null;
   return (
     <div className="welcome-template" ref={previewRef}>
       <div
@@ -28,26 +25,27 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
       >
         <img
           src={welcomeTemplate}
-          alt="Plantilla base"
+          alt="Plantilla de bienvenida"
           className="welcome-base"
         />
       </div>
-      
       {previewUrl && (
-        <img src={previewUrl} alt="uploaded" className="welcome-photo" />
+        <img src={previewUrl} alt="Foto subida" className="welcome-photo" />
       )}
-      
       <h2 className="welcome-text">{formData[FORM_FIELDS.NAME]}!</h2>
-
-      {formData[FORM_FIELDS.OPTION] && (
+      {option && (
         <img
-          src={getOptionImage(formData[FORM_FIELDS.OPTION])}
-          alt={formData[FORM_FIELDS.OPTION]}
+          src={getOptionImage(option)}
+          alt={`Opción: ${option}`}
           className="option-image"
         />
       )}
     </div>
   );
 };
-
+WelcomeTemplate.propTypes = {
+  previewUrl: PropTypes.string,
+  formData: PropTypes.object.isRequired,
+  previewRef: PropTypes.object,
+};
 export default WelcomeTemplate;
