@@ -8,10 +8,9 @@ export const OPTIONS_AREAS = {
   SCHOOL: "school",
   LABS: "labs",
   STUDIO: "studio",
-  ROLING: "roling", 
 };
 export const FILTER_STYLES = {
-  [OPTIONS_AREAS.ROLING]: "hue-rotate(0deg) brightness(100%)",
+  [OPTIONS_AREAS.SCHOOL]: "hue-rotate(0deg) brightness(100%)",
   [OPTIONS_AREAS.LABS]: "hue-rotate(220deg) brightness(100%)",
   [OPTIONS_AREAS.STUDIO]: "hue-rotate(40deg) brightness(100%)",
   DEFAULT: "",

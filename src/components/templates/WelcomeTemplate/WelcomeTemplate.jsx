@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from 'react';
 import './welcomeTemplate.css';
 import welcomeTemplate from '/images/welcomeTemplate.png';
 import { 
-  OPTIONS_AREAS, 
   FORM_FIELDS, 
   FILTER_STYLES, 
   OPTION_IMAGES 
@@ -12,7 +11,6 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const [filterStyle, setFilterStyle] = useState("");
   const templateRef = useRef(null);
   const option = formData[FORM_FIELDS.OPTION];
-
   useEffect(() => {
     const style = FILTER_STYLES[option] || FILTER_STYLES.DEFAULT;
     setFilterStyle(style);
@@ -21,7 +19,6 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const getOptionImage = (option) => {
     return OPTION_IMAGES[option] || null;
   };
-
   return (
     <div className="welcome-template" ref={previewRef}>
       <div
