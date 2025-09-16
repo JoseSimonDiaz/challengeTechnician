@@ -1,5 +1,5 @@
 import React from 'react';
-import Template_Birthday from '../../../../public/images/template_birthday.png';
+import Template_Birthday from '/images/template_birthday.png';
 import './birthdayTemplate.css';
 
 const BirthdayTemplate = ({ previewUrl, formData, previewRef }) => {

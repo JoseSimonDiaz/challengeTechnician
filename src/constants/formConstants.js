@@ -1,7 +1,8 @@
 export const FORM_FIELDS = {
   NAME: 'name',
   DAY: 'day',
-  MONTH: 'month'
+  MONTH: 'month',
+  OPTION: 'option',
 };
 
 export const VALIDATION_RULES = {
@@ -22,4 +23,10 @@ export const VALIDATION_RULES = {
     { required: true, message: 'El mes es obligatorio' },
     { max: 15, message: 'Máximo 15 caracteres' }
   ]
+};
+
+export const OPTIONS_AREAS = {
+  SCHOOL: 'school',
+  LABS: 'labs',
+  STUDIO: 'studio', 
 };

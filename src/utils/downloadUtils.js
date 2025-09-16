@@ -1,5 +1,5 @@
-import html2canvas from "html2canvas";
-import { message } from "antd";
+import html2canvas from 'html2canvas';
+import { message } from 'antd';
 
 export const downloadImage = async (elementRef, fileName) => {
   if (!elementRef.current) return;
@@ -15,8 +15,7 @@ export const downloadImage = async (elementRef, fileName) => {
     link.click();
     return true;
   } catch (error) {
-    message.error("Error al descargar la imagen");
-    console.error("Download error:", error);
+    message.error("Error al descargar la imagen", error);
     return false;
   }
 };
