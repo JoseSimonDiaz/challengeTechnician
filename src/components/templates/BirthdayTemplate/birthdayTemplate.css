@@ -1,49 +1,77 @@
 .birthday-template {
-  width: 1090px;
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .template-background {
-  width: 500px;
+  max-width: 390px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 .user-photo {
   position: absolute;
-  top: 54.1%;
-  left: 58.4%;
-  transform: translateX(-50%);
-  width: 201px;
-  height: 170px;
+  top: 70.1%;
+  left: 68.2%;
+  transform: translate(-50%, -50%);
+  height: 154.5px;
   object-fit: contain;
-  background-color: white;
-  border-radius: 4px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .code-snippet {
   position: absolute;
   top: 34%;
-  left: 49%;
+  left: 47%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-size: 12px;
+  font-size: 10.2px;
   font-family: monospace;
-  padding: 8px;
+  color: #f8f8f2;
+  padding: 6px 8px;
   border-radius: 4px;
-  text-align: left;
+  max-width: 220px;
   white-space: pre-wrap;
-  margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+}
+
+.code-snippet .keyword {
+  color: #66d9ef;
+  font-weight: bold;
+}
+.code-snippet .string {
+  color: #a6e22e;
+}
+.code-snippet .number {
+  color: #fd971f;
+}
+.code-snippet .function {
+  color: #f92672;
 }
 
 .date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   position: absolute;
-  bottom: 11.1%;
-  left: 39%;
+  bottom: 6.1%;
+  left: 25%;
   transform: translate(-50%, -50%);
   color: #000;
   font-family: Arial, sans-serif;
+  text-align: center;
+  max-width: 140px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .date-container .day {

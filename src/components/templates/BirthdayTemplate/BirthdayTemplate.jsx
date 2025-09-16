@@ -13,15 +13,27 @@ const BirthdayTemplate = ({ previewUrl, formData, previewRef }) => {
       {previewUrl && (
         <img src={previewUrl} alt="Foto subida" className="user-photo" />
       )}
+
       <pre className="code-snippet">
-        {`var i = 0, age = getAge();
-while(true) {
-  if (i === age) {
-    alert('¡Feliz Cumple ${formData.name || "___"}!');
-  } else {
-    i++;
-  }
-}`}
+        <code>
+          <span className="keyword">var</span> i ={" "}
+          <span className="number">0</span>, age = getAge();
+          {"\n"}
+          <span className="keyword">while</span>(
+          <span className="keyword">true</span>) {"{"}
+          {"\n  "}
+          <span className="keyword">if</span> (i === age) {"{"}
+          {"\n    "}
+          alert(
+          <span className="string">
+            {`'¡Feliz Cumple ${formData.name || "___"}!'`}
+          </span>
+          );
+          {"\n  } else {"}
+          {"\n    "}i++;
+          {"\n  }"}
+          {"\n}"}
+        </code>
       </pre>
       <div className="date-container">
         <div className="day">{formData.day || "__"}</div>
