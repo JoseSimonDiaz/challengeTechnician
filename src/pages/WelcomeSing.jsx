@@ -1,9 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Form, Input, Button, message, Spin, Row, Col, Select } from 'antd';
 import { EyeFilled, LoadingOutlined } from '@ant-design/icons';
-
-import '../styles/welcomeSing.css';
-
 import ImageUploader from '../components/common/ImageUploader/ImageUploader';
 import PreviewModal from '../components/common/PreviewModal/PreviewModal';
 import WelcomeTemplate from '../components/templates/WelcomeTemplate/WelcomeTemplate';
@@ -21,7 +18,6 @@ const TemplateWelcome = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", option: "" });
   const previewRef = useRef(null);
-
   const handleFileChange = useCallback((file) => {
     setLoading(true);
     setTimeout(() => {
@@ -32,14 +28,12 @@ const TemplateWelcome = () => {
       message.success(`${file.name} cargada correctamente.`);
     }, 800);
   }, []);
-
   const handleFileRemove = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setFile(null);
     setPreviewUrl(null);
     form.resetFields();
   }, [previewUrl, form]);
-
   const handlePreview = useCallback(() => {
     setPreviewLoading(true);
     form
@@ -53,7 +47,6 @@ const TemplateWelcome = () => {
         setPreviewLoading(false);
       });
   }, [form]);
-
   const handleDownload = useCallback(async () => {
     setDownloading(true);
     await downloadImage(
@@ -62,7 +55,6 @@ const TemplateWelcome = () => {
     );
     setDownloading(false);
   }, [formData.name]);
-
   const isFormValid = () => {
     const values = form.getFieldsValue();
     const hasErrors = form
@@ -70,7 +62,6 @@ const TemplateWelcome = () => {
       .some(({ errors }) => errors.length > 0);
     return values.name && values.option && !hasErrors;
   };
-
   return (
     <div className="template-welcome-container">
       <ImageUploader
@@ -80,7 +71,6 @@ const TemplateWelcome = () => {
         onFileChange={handleFileChange}
         onFileRemove={handleFileRemove}
       />
-
       {file && (
         <div className="form-container">
           <Form form={form} className="welcome-form">
@@ -94,7 +84,6 @@ const TemplateWelcome = () => {
                   <Input placeholder="Nombre" />
                 </Form.Item>
               </Col>
-
               <Col xs={24} sm={12}>
                 <Form.Item
                   name="option"
@@ -109,7 +98,6 @@ const TemplateWelcome = () => {
                 </Form.Item>
               </Col>
             </Row>
-
             <Form.Item shouldUpdate className="button-container">
               {() => (
                 <Button
