@@ -23,7 +23,6 @@ const ImageUploader = ({
         message.error("Solo puedes subir imágenes JPG/PNG!");
         return Upload.LIST_IGNORE;
       }
-
       onFileChange(file);
       return false;
     },
@@ -39,7 +38,6 @@ const ImageUploader = ({
         ]
       : [],
   };
-
   return (
     <Dragger {...props} disabled={loading} className="image-uploader">
       <p className="ant-upload-drag-icon">
