@@ -1,6 +1,7 @@
 .welcome-template {
   position: relative;
   display: inline-block;
+  overflow: hidden;
 }
 
 .welcome-base {
@@ -21,13 +22,20 @@
 
 .welcome-text {
   position: absolute;
-  bottom: 22%;
+  bottom: 16%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 22px;
+  font-size: 19px;
   font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  color: #f8f8f2;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  max-width: 320px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
 }
 
 .option-image {
@@ -35,4 +43,18 @@
   bottom: 80%;
   right: 33%;
   width: 200px;
+}
+
+.welcome-text .keyword {
+  color: #66d9ef;
+  font-weight: bold;
+}
+.welcome-text .string {
+  color: #a6e22e;
+}
+.welcome-text .number {
+  color: #fd971f;
+}
+.welcome-text .function {
+  color: #f92672;
 }

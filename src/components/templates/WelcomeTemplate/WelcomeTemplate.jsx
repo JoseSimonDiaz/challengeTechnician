@@ -1,45 +1,21 @@
 import { useRef, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './welcomeTemplate.css';
 import welcomeTemplate from '/images/welcomeTemplate.png';
-import schoolImg from '/images/RCS.png';
-import labsImg from '/images/RCLabs.png';
-import studioImg from '/images/studio.png';
-import { OPTIONS_AREAS, FORM_FIELDS } from '../../../constants/formConstants';  
+import {
+  FORM_FIELDS,
+  FILTER_STYLES,
+  OPTION_IMAGES,
+} from '../../../constants/formConstants';
 
 const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const [filterStyle, setFilterStyle] = useState("");
   const templateRef = useRef(null);
-
   const option = formData[FORM_FIELDS.OPTION];
-
   useEffect(() => {
-    switch (option) {
-      case OPTIONS_AREAS.ROLING:
-        setFilterStyle("hue-rotate(0deg) brightness(100%)");
-        break;
-      case OPTIONS_AREAS.LABS:
-        setFilterStyle("hue-rotate(220deg) brightness(100%)");
-        break;
-      case OPTIONS_AREAS.STUDIO:
-        setFilterStyle("hue-rotate(40deg) brightness(100%)");
-        break;
-      default:
-        setFilterStyle("");
-    }
+    setFilterStyle(FILTER_STYLES[option] || FILTER_STYLES.DEFAULT);
   }, [option]);
-
-  const getOptionImage = (option) => {
-    switch (option) {
-      case OPTIONS_AREAS.SCHOOL:
-        return schoolImg;
-      case OPTIONS_AREAS.LABS:
-        return labsImg;
-      case OPTIONS_AREAS.STUDIO:
-        return studioImg;
-      default:
-        return null;
-    }
-  };
+  const getOptionImage = (opt) => OPTION_IMAGES[opt] || null;
   return (
     <div className="welcome-template" ref={previewRef}>
       <div
@@ -49,24 +25,27 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
       >
         <img
           src={welcomeTemplate}
-          alt="Plantilla base"
+          alt="Plantilla de bienvenida"
           className="welcome-base"
         />
       </div>
       {previewUrl && (
-        <img src={previewUrl} alt="uploaded" className="welcome-photo" />
+        <img src={previewUrl} alt="Foto subida" className="welcome-photo" />
       )}
-      <h2 className="welcome-text"> {formData[FORM_FIELDS.NAME]}!</h2>
-
-      {formData[FORM_FIELDS.OPTION] && (
+      <h2 className="welcome-text">{formData[FORM_FIELDS.NAME]}!</h2>
+      {option && (
         <img
-          src={getOptionImage(formData[FORM_FIELDS.OPTION])}
-          alt={formData[FORM_FIELDS.OPTION]}
+          src={getOptionImage(option)}
+          alt={`Opción: ${option}`}
           className="option-image"
         />
       )}
     </div>
   );
 };
-
+WelcomeTemplate.propTypes = {
+  previewUrl: PropTypes.string,
+  formData: PropTypes.object.isRequired,
+  previewRef: PropTypes.object,
+};
 export default WelcomeTemplate;
