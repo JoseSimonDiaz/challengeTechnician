@@ -119,7 +119,6 @@ const TemplateWelcome = () => {
           </Form>
         </div>
       )}
-
       <PreviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

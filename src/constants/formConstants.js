@@ -24,7 +24,6 @@ export const VALIDATION_RULES = {
     { max: 15, message: 'Máximo 15 caracteres' }
   ]
 };
-
 export const OPTIONS_AREAS = {
   SCHOOL: 'school',
   LABS: 'labs',

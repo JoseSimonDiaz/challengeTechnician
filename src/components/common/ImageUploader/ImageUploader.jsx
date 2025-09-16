@@ -1,5 +1,6 @@
 import React from 'react';
 import { Upload, message } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import './imageUploader.css';
 
@@ -39,18 +40,33 @@ const ImageUploader = ({
       : [],
   };
   return (
-    <Dragger {...props} disabled={loading} className="image-uploader">
-      <p className="ant-upload-drag-icon">
-        {loading ? (
-          <LoadingOutlined style={{ fontSize: 24 }} />
-        ) : (
-          <InboxOutlined style={{ fontSize: 24 }} />
-        )}
-      </p>
-      <p className="ant-upload-text">Arrastra la foto de la persona aquí</p>
-      <p className="ant-upload-hint">Se utilizará una única imagen a la vez</p>
-    </Dragger>
+    <ImgCrop
+      rotationSlider
+      modalTitle="Recortar imagen"
+      modalOk="Confirmar"
+      modalCancel="Cancelar"
+      beforeCrop={handleBeforeCrop}
+    >
+      <Dragger {...props} disabled={loading} className="image-uploader">
+        <p className="ant-upload-drag-icon">
+          {loading ? (
+            <LoadingOutlined style={{ fontSize: 24 }} />
+          ) : (
+            <InboxOutlined style={{ fontSize: 24 }} />
+          )}
+        </p>
+        <p className="ant-upload-text">Arrastra la foto de la persona aquí</p>
+        <p className="ant-upload-hint">Se utilizará una única imagen a la vez</p>
+      </Dragger>
+    </ImgCrop>
   );
+};
+const handleBeforeCrop = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('Solo puedes recortar imágenes JPG/PNG!');
+  }
+  return isJpgOrPng;
 };
 
 export default ImageUploader;

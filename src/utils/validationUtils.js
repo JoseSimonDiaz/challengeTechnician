@@ -3,7 +3,6 @@ export const validateName = (name) => {
   if (name.length > 80) return "Máximo 80 caracteres";
   return null;
 };
-
 export const validateDay = (day) => {
   if (!day && day !== 0) return "El día es obligatorio";
   const dayNum = Number(day);
@@ -12,7 +11,6 @@ export const validateDay = (day) => {
   }
   return null;
 };
-
 export const validateMonth = (month) => {
   if (!month) return "El mes es obligatorio";
   if (month.length > 15) return "Máximo 15 caracteres";

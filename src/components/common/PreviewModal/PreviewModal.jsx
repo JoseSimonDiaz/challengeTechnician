@@ -22,7 +22,6 @@ const PreviewModal = ({
     >
       <h2 className="previewClass">Preview</h2>
       {children}
-
       <div className="modal-footer">
         <Button
           type="primary"

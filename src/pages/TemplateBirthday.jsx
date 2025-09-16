@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback } from 'react';
 import { Form, Input, Button, message, Spin, Row, Col } from 'antd';
 import { EyeFilled, LoadingOutlined } from '@ant-design/icons';
 import '../styles/templateBirthday.css';
-
 import ImageUploader from '../components/common/ImageUploader/ImageUploader';
 import PreviewModal from '../components/common/PreviewModal/PreviewModal';
 import BirthdayTemplate from '../components/templates/BirthdayTemplate/BirthdayTemplate';
@@ -19,7 +18,6 @@ const TemplateBirthday = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", day: "", month: "" });
   const previewRef = useRef(null);
-
   const handleFileChange = useCallback((file) => {
     setLoading(true);
     setTimeout(() => {
@@ -30,14 +28,12 @@ const TemplateBirthday = () => {
       message.success(`${file.name} cargada correctamente.`);
     }, 800);
   }, []);
-
   const handleFileRemove = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setFile(null);
     setPreviewUrl(null);
     form.resetFields();
   }, [previewUrl, form]);
-
   const handlePreview = useCallback(() => {
     setPreviewLoading(true);
     form
@@ -51,7 +47,6 @@ const TemplateBirthday = () => {
         setPreviewLoading(false);
       });
   }, [form]);
-
   const handleDownload = useCallback(async () => {
     setDownloading(true);
     await downloadImage(
@@ -60,7 +55,6 @@ const TemplateBirthday = () => {
     );
     setDownloading(false);
   }, [formData.name]);
-
   const isFormValid = () => {
     const values = form.getFieldsValue();
     const hasErrors = form
@@ -68,23 +62,18 @@ const TemplateBirthday = () => {
       .some(({ errors }) => errors.length > 0);
     return values.name && values.day && values.month && !hasErrors;
   };
-
   const validateMonthField = (_, value) => {
     if (!value || value.trim() === "") {
       return Promise.reject(new Error("Por favor ingresa el mes"));
     }
-
     if (/\d/.test(value)) {
       return Promise.reject(new Error("El mes no puede contener números"));
     }
-
     if (value.length > 15) {
       return Promise.reject(new Error("Máximo 15 caracteres permitidos"));
     }
-
     return Promise.resolve();
   };
-
   return (
     <div className="template-birthday-container">
       <ImageUploader
@@ -94,7 +83,6 @@ const TemplateBirthday = () => {
         onFileChange={handleFileChange}
         onFileRemove={handleFileRemove}
       />
-
       {file && (
         <div className="form-container">
           <Form form={form} className="birthday-form">
@@ -108,7 +96,6 @@ const TemplateBirthday = () => {
                   <Input placeholder="Nombre" />
                 </Form.Item>
               </Col>
-
               <Col xs={24} sm={4}>
                 <Form.Item
                   name="day"
@@ -118,7 +105,6 @@ const TemplateBirthday = () => {
                   <Input placeholder="Día" type="number" />
                 </Form.Item>
               </Col>
-
               <Col xs={24} sm={8}>
                 <Form.Item
                   name="month"
@@ -129,7 +115,6 @@ const TemplateBirthday = () => {
                 </Form.Item>
               </Col>
             </Row>
-
             <Form.Item shouldUpdate className="button-container">
               {() => (
                 <Button
@@ -151,7 +136,6 @@ const TemplateBirthday = () => {
           </Form>
         </div>
       )}
-
       <PreviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

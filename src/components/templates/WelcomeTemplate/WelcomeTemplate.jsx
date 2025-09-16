@@ -9,9 +9,7 @@ import { OPTIONS_AREAS, FORM_FIELDS } from '../../../constants/formConstants';
 const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const [filterStyle, setFilterStyle] = useState("");
   const templateRef = useRef(null);
-
   const option = formData[FORM_FIELDS.OPTION];
-
   useEffect(() => {
     switch (option) {
       case OPTIONS_AREAS.ROLING:
@@ -27,7 +25,6 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
         setFilterStyle("");
     }
   }, [option]);
-
   const getOptionImage = (option) => {
     switch (option) {
       case OPTIONS_AREAS.SCHOOL:

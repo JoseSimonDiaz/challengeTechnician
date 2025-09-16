@@ -4,7 +4,6 @@ import WelcomeSing from './pages/WelcomeSing';
 import { StarFilled, GiftFilled } from '@ant-design/icons';
 import './styles/app.css';
 
-
 export default function App() {
   return (
     <section className="app-container">
