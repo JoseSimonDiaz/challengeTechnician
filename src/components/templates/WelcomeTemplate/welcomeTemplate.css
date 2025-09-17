@@ -15,14 +15,14 @@
   top: 34%;
   left: 50%;
   transform: translateX(-50%);
-  width: 154px;
+  width: 157.4px;
   max-height: 200px;
   object-fit: contain;
 }
 
 .welcome-text {
   position: absolute;
-  bottom: 16%;
+  bottom: 19%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 19px;
@@ -41,8 +41,8 @@
 .option-image {
   position: absolute;
   bottom: 80%;
-  right: 33%;
-  width: 200px;
+  right: 30%;
+  width: 250px;
 }
 
 .welcome-text .keyword {
@@ -58,3 +58,14 @@
 .welcome-text .function {
   color: #f92672;
 }
+
+.welcome-base-container.labs::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(78, 73, 212, 0.642); 
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+
