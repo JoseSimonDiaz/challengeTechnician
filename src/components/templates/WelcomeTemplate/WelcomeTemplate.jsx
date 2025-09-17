@@ -7,7 +7,6 @@ import {
   FILTER_STYLES,
   OPTION_IMAGES,
 } from '../../../constants/formConstants';
-
 const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const [filterStyle, setFilterStyle] = useState("");
   const templateRef = useRef(null);
