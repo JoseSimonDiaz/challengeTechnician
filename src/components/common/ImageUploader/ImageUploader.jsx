@@ -1,0 +1,78 @@
+import PropTypes from 'prop-types';
+import { Upload, message } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
+import './imageUploader.css';
+const { Dragger } = Upload;
+const handleBeforeCrop = (file) => {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  if (!isJpgOrPng) {
+    message.error("Solo puedes recortar imágenes JPG/PNG!");
+  }
+  return isJpgOrPng;
+};
+const ImageUploader = ({
+  file,
+  previewUrl,
+  loading,
+  onFileChange,
+  onFileRemove,
+}) => {
+  const props = {
+    name: "file",
+    multiple: false,
+    accept: ".jpg,.jpeg,.png",
+    beforeUpload: (file) => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        message.error("Solo puedes subir imágenes JPG/PNG!");
+        return Upload.LIST_IGNORE;
+      }
+      onFileChange(file);
+      return false;
+    },
+    onRemove: onFileRemove,
+    fileList: file
+      ? [
+          {
+            uid: file.uid || "-1",
+            name: file.name,
+            status: "done",
+            url: previewUrl,
+          },
+        ]
+      : [],
+  };
+  return (
+    <ImgCrop
+      rotationSlider
+      modalTitle="Recortar imagen"
+      modalOk="Confirmar"
+      modalCancel="Cancelar"
+      beforeCrop={handleBeforeCrop}
+    >
+      <Dragger {...props} disabled={loading} className="image-uploader">
+        <p className="ant-upload-drag-icon">
+          {loading ? (
+            <LoadingOutlined style={{ fontSize: 24 }} />
+          ) : (
+            <InboxOutlined style={{ fontSize: 24 }} />
+          )}
+        </p>
+        <p className="ant-upload-text">Arrastra la foto aquí</p>
+        <p className="ant-upload-hint">
+          Se utilizará una única imagen a la vez
+        </p>
+      </Dragger>
+    </ImgCrop>
+  );
+};
+ImageUploader.propTypes = {
+  file: PropTypes.object,
+  previewUrl: PropTypes.string,
+  loading: PropTypes.bool,
+  onFileChange: PropTypes.func.isRequired,
+  onFileRemove: PropTypes.func.isRequired,
+};
+export default ImageUploader;

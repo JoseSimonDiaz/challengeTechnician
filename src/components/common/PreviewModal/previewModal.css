@@ -1,0 +1,22 @@
+.preview-modal .ant-modal-body {
+  padding: 0;
+}
+
+.previewClass {
+  font-weight: 600;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.download-button {
+  border-radius: 5px;
+  width: 160px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
