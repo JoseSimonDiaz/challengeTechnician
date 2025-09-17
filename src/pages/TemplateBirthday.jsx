@@ -7,7 +7,6 @@ import PreviewModal from '../components/common/PreviewModal/PreviewModal';
 import BirthdayTemplate from '../components/templates/BirthdayTemplate/BirthdayTemplate';
 import { useTemplateForm } from '../hooks/useTemplateForm';
 import { FORM_FIELDS, VALIDATION_RULES } from '../constants/formConstants';
-
 const TemplateBirthday = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);

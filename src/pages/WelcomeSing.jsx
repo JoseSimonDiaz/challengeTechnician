@@ -10,7 +10,6 @@ import {
   VALIDATION_RULES,
   OPTIONS_AREAS,
 } from '../constants/formConstants';
-
 const WelcomeSing = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);

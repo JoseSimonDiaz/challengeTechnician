@@ -10,9 +10,11 @@ export const OPTIONS_AREAS = {
   STUDIO: "studio",
 };
 export const FILTER_STYLES = {
-  [OPTIONS_AREAS.SCHOOL]: "hue-rotate(0deg) brightness(100%)",
-  [OPTIONS_AREAS.LABS]: "hue-rotate(220deg) brightness(100%)",
-  [OPTIONS_AREAS.STUDIO]: "hue-rotate(40deg) brightness(100%)",
+  [OPTIONS_AREAS.SCHOOL]: "hue-rotate(0deg) brightness(100%)", 
+  [OPTIONS_AREAS.LABS]:
+    "hue-rotate(260deg) saturate(1.5) brightness(0.85)",
+  [OPTIONS_AREAS.STUDIO]:
+    "hue-rotate(55deg) saturate(3) brightness(1.1)",
   DEFAULT: "",
 };
 export const OPTION_IMAGES = {

@@ -7,7 +7,6 @@ import {
   FILTER_STYLES,
   OPTION_IMAGES,
 } from '../../../constants/formConstants';
-
 const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   const [filterStyle, setFilterStyle] = useState("");
   const templateRef = useRef(null);
@@ -19,7 +18,7 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
   return (
     <div className="welcome-template" ref={previewRef}>
       <div
-        className="welcome-base-container"
+        className={` welcome-base-container ${option}`}
         style={{ filter: filterStyle }}
         ref={templateRef}
       >
@@ -32,7 +31,7 @@ const WelcomeTemplate = ({ previewUrl, formData, previewRef }) => {
       {previewUrl && (
         <img src={previewUrl} alt="Foto subida" className="welcome-photo" />
       )}
-      <h2 className="welcome-text">{formData[FORM_FIELDS.NAME]}!</h2>
+      <h2 className="welcome-text">{formData[FORM_FIELDS.NAME]}</h2>
       {option && (
         <img
           src={getOptionImage(option)}

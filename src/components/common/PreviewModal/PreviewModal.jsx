@@ -6,7 +6,6 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 import './previewModal.css';
-
 const PreviewModal = ({ isOpen, onClose, onDownload, downloading, children }) => {
   return (
     <Modal

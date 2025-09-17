@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import TemplateBirthday from '/images/template_birthday.png';
 import './birthdayTemplate.css';
-
 const BirthdayTemplate = ({ previewUrl, formData, previewRef }) => {
   return (
     <div ref={previewRef} className="birthday-template">
@@ -48,5 +47,4 @@ BirthdayTemplate.propTypes = {
   formData: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };
-
 export default BirthdayTemplate;
