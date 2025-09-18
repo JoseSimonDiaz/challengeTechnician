@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Spin, Row, Col, Select } from 'antd';
-import { EyeFilled, LoadingOutlined } from '@ant-design/icons';
-import ImageUploader from '../components/common/ImageUploader/ImageUploader';
-import PreviewModal from '../components/common/PreviewModal/PreviewModal';
-import WelcomeTemplate from '../components/templates/WelcomeTemplate/WelcomeTemplate';
-import { useTemplateForm } from '../hooks/useTemplateForm';
+import React, { useState } from 'react'
+import { Form, Input, Button, Spin, Row, Col, Select } from 'antd'
+import { EyeFilled, LoadingOutlined } from '@ant-design/icons'
+import ImageUploader from '../components/common/ImageUploader/ImageUploader'
+import PreviewModal from '../components/common/PreviewModal/PreviewModal'
+import WelcomeTemplate from '../components/templates/WelcomeTemplate/WelcomeTemplate'
+import { useTemplateForm } from '../hooks/useTemplateForm'
 import {
   FORM_FIELDS,
   VALIDATION_RULES,
   OPTIONS_AREAS,
-} from '../constants/formConstants';
+} from '../constants/formConstants'
 const WelcomeSing = () => {
-  const [form] = Form.useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = Form.useForm()
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const {
     file,
     previewUrl,
@@ -24,18 +24,18 @@ const WelcomeSing = () => {
     handleFileChange,
     handleFileRemove,
     handlePreview,
-    handleDownload,
+    handleDownload, 
   } = useTemplateForm(
-    { [FORM_FIELDS.NAME]: "", [FORM_FIELDS.OPTION]: "" },
-    "placa_bienvenida"
-  );
+    { [FORM_FIELDS.NAME]: '', [FORM_FIELDS.OPTION]: '' },
+    'placa_bienvenida'
+  )
   const isFormValid = () => {
-    const values = form.getFieldsValue();
+    const values = form.getFieldsValue()
     const hasErrors = form
       .getFieldsError()
-      .some(({ errors }) => errors.length > 0);
-    return values[FORM_FIELDS.NAME] && values[FORM_FIELDS.OPTION] && !hasErrors;
-  };
+      .some(({ errors }) => errors.length > 0)
+    return values[FORM_FIELDS.NAME] && values[FORM_FIELDS.OPTION] && !hasErrors
+  }
   return (
     <div className="template-welcome-container">
       <ImageUploader
@@ -44,8 +44,8 @@ const WelcomeSing = () => {
         loading={loading}
         onFileChange={handleFileChange}
         onFileRemove={() => {
-          handleFileRemove();
-          form.resetFields();
+          handleFileRemove()
+          form.resetFields()
         }}
       />
       {file && (
@@ -64,7 +64,7 @@ const WelcomeSing = () => {
               <Col xs={24} sm={12}>
                 <Form.Item
                   name={FORM_FIELDS.OPTION}
-                  rules={[{ required: true, message: "Selecciona una opción" }]}
+                  rules={[{ required: true, message: 'Selecciona una opción' }]}
                   className="form-item"
                 >
                   <Select placeholder="Selecciona una opción">
@@ -95,7 +95,7 @@ const WelcomeSing = () => {
                   ) : (
                     <EyeFilled />
                   )}
-                  {previewLoading ? "Cargando..." : "Previsualizar"}
+                  {previewLoading ? 'Cargando...' : 'Previsualizar'}
                 </Button>
               )}
             </Form.Item>
@@ -105,16 +105,16 @@ const WelcomeSing = () => {
       <PreviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onDownload={handleDownload}
+        onDownload={() => handleDownload(previewRef)} 
         downloading={downloading}
       >
         <WelcomeTemplate
           previewUrl={previewUrl}
           formData={formData}
-          previewRef={previewRef}
+          previewRef={previewRef} 
         />
       </PreviewModal>
     </div>
-  );
-};
-export default WelcomeSing;
+  )
+}
+export default WelcomeSing

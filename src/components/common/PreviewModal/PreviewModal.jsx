@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import { Modal, Button, Spin } from 'antd';
+import PropTypes from 'prop-types'
+import { Modal, Button, Spin } from 'antd'
 import {
   CloseOutlined,
   DownloadOutlined,
   LoadingOutlined,
-} from '@ant-design/icons';
-import './previewModal.css';
+} from '@ant-design/icons'
+import './previewModal.css'
 const PreviewModal = ({ isOpen, onClose, onDownload, downloading, children }) => {
   return (
     <Modal
@@ -31,17 +31,17 @@ const PreviewModal = ({ isOpen, onClose, onDownload, downloading, children }) =>
           ) : (
             <DownloadOutlined />
           )}
-          {downloading ? "Generando..." : "Descargar"}
+          {downloading ? 'Generando...' : 'Descargar'}
         </Button>
       </div>
     </Modal>
-  );
-};
+  )
+}
 PreviewModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
   downloading: PropTypes.bool,
   children: PropTypes.node,
-};
-export default PreviewModal;
+}
+export default PreviewModal
