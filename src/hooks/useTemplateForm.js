@@ -1,49 +1,62 @@
-import { useState, useCallback, useRef } from 'react';
-import { message } from 'antd';
-import { downloadImage } from '../utils/downloadUtils';
-
-export const useTemplateForm = (initialFormData, filePrefix) => {
-  const [file, setFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [downloading, setDownloading] = useState(false);
-  const [previewLoading, setPreviewLoading] = useState(false);
-  const [formData, setFormData] = useState(initialFormData);
-  const previewRef = useRef(null);
-  const handleFileChange = useCallback((file) => {
-    setLoading(true);
-    setTimeout(() => {
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-      setFile(file);
-      setLoading(false);
-      message.success(`${file.name} cargada correctamente.`);
-    }, 800);
-  }, []);
-  const handleFileRemove = useCallback(() => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setFile(null);
-    setPreviewUrl(null);
-  }, [previewUrl]);
-  const handlePreview = useCallback((form, setIsModalOpen) => {
-    setPreviewLoading(true);
-    form
-      .validateFields()
-      .then((values) => {
-        setFormData(values);
-        setIsModalOpen(true);
-        setPreviewLoading(false);
+import { useRef, useState } from 'react'
+import domtoimage from 'dom-to-image-more'
+export const useTemplateForm = (initialFormData, fileNamePrefix) => {
+  const [file, setFile] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState('')
+  const [loading] = useState(false)
+  const [previewLoading, setPreviewLoading] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+  const [formData, setFormData] = useState(initialFormData)
+  const previewRef = useRef(null)
+  const handleFileChange = (newFile) => {
+    if (!newFile) return
+    setFile(newFile)
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setPreviewUrl(event.target.result) 
+    }
+    reader.readAsDataURL(newFile)
+  }
+  const handleFileRemove = () => {
+    setFile(null)
+    setPreviewUrl('')
+  }
+  const handlePreview = async (form, setIsModalOpen) => {
+    try {
+      setPreviewLoading(true)
+      const values = await form.validateFields()
+      setFormData(values)
+      setIsModalOpen(true)
+    } catch (err) {
+      console.error('Error al validar formulario:', err)
+    } finally {
+      setPreviewLoading(false)
+    }
+  }
+  const handleDownload = async () => {
+    if (!previewRef.current) return
+    try {
+      setDownloading(true)
+      const dataUrl = await domtoimage.toPng(previewRef.current, {
+        quality: 1,
+        cacheBust: true,
+        width: previewRef.current.offsetWidth * 2,
+        height: previewRef.current.offsetHeight * 2,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left',
+        },
       })
-      .catch(() => setPreviewLoading(false));
-  }, []);
-  const handleDownload = useCallback(async () => {
-    setDownloading(true);
-    await downloadImage(
-      previewRef,
-      `${filePrefix}_${formData.name || "usuario"}.png`
-    );
-    setDownloading(false);
-  }, [formData.name, filePrefix]);
+      const link = document.createElement('a')
+      link.download = `${fileNamePrefix}.png`
+      link.href = dataUrl
+      link.click()
+    } catch (err) {
+      console.error('Error al generar la imagen:', err)
+    } finally {
+      setDownloading(false)
+    }
+  }
   return {
     file,
     previewUrl,
@@ -52,10 +65,9 @@ export const useTemplateForm = (initialFormData, filePrefix) => {
     previewLoading,
     formData,
     previewRef,
-    setFormData,
     handleFileChange,
     handleFileRemove,
     handlePreview,
     handleDownload,
-  };
-};
+  }
+}

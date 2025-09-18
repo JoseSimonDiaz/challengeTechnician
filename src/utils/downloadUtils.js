@@ -1,9 +1,7 @@
 import html2canvas from 'html2canvas';
 import { message } from 'antd';
-
 export const downloadImage = async (elementRef, fileName) => {
   if (!elementRef.current) return;
-
   try {
     const canvas = await html2canvas(elementRef.current, {
       useCORS: true,
