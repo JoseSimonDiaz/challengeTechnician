@@ -2,9 +2,10 @@
   padding: 0;
 }
 
-.previewClass {
+.preview-title {
   font-weight: 600;
 }
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
