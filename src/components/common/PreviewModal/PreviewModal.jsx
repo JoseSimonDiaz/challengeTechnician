@@ -17,7 +17,7 @@ const PreviewModal = ({ isOpen, onClose, onDownload, downloading, children }) =>
       width="fit-content"
       className="preview-modal"
     >
-      <h2 className="previewClass">Vista previa</h2>
+      <h2 className="preview-title">Vista previa</h2>
       {children}
       <div className="modal-footer">
         <Button
@@ -41,7 +41,7 @@ PreviewModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
-  downloading: PropTypes.bool,
-  children: PropTypes.node,
+  downloading: PropTypes.bool.isRequired, 
+  children: PropTypes.element.isRequired, 
 }
 export default PreviewModal

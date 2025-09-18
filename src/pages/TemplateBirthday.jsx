@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Spin, Row, Col } from 'antd';
+import React, { useState, useCallback } from 'react';
+import { Form, Input, InputNumber, Button, Spin, Row, Col } from 'antd';
 import { EyeFilled, LoadingOutlined } from '@ant-design/icons';
 import '../styles/templateBirthday.css';
 import ImageUploader from '../components/common/ImageUploader/ImageUploader';
@@ -23,10 +23,10 @@ const TemplateBirthday = () => {
     handlePreview,
     handleDownload,
   } = useTemplateForm(
-    { [FORM_FIELDS.NAME]: "", [FORM_FIELDS.DAY]: "", [FORM_FIELDS.MONTH]: "" },
-    "placa_cumple"
+    { [FORM_FIELDS.NAME]: '', [FORM_FIELDS.DAY]: '', [FORM_FIELDS.MONTH]: '' },
+    'placa_cumple'
   );
-  const isFormValid = () => {
+  const isFormValid = useCallback(() => {
     const values = form.getFieldsValue();
     const hasErrors = form
       .getFieldsError()
@@ -37,7 +37,7 @@ const TemplateBirthday = () => {
       values[FORM_FIELDS.MONTH] &&
       !hasErrors
     );
-  };
+  }, [form]);
   return (
     <div className="template-birthday-container">
       <ImageUploader
@@ -69,7 +69,7 @@ const TemplateBirthday = () => {
                   rules={VALIDATION_RULES[FORM_FIELDS.DAY]}
                   className="form-item"
                 >
-                  <Input placeholder="Día" type="number" />
+                  <InputNumber placeholder="Día" min={1} max={31} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={8}>
@@ -96,7 +96,7 @@ const TemplateBirthday = () => {
                   ) : (
                     <EyeFilled />
                   )}
-                  {previewLoading ? "Cargando..." : "Previsualizar"}
+                  {previewLoading ? 'Cargando...' : 'Previsualizar'}
                 </Button>
               )}
             </Form.Item>
@@ -106,7 +106,7 @@ const TemplateBirthday = () => {
       <PreviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onDownload={handleDownload}
+        onDownload={() => handleDownload(previewRef)}
         downloading={downloading}
       >
         <BirthdayTemplate
